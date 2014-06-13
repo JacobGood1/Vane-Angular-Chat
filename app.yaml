@@ -3,13 +3,15 @@ framework: vane
 
 handlers:
 - url: /ws
-  match: exact 
-  script: chat.dart
-  handler: Chat
+  handler: chat.dart:Chat
   
-# Static content  
+# Static content, will be served by your app's Nginx instance 
 - url: /
   match: postregex
   static_dir: web
 
-  
+# Equivalent longer config for the Dart handler above  
+#- url: /ws
+#  script: chat.dart
+#  handler: Chat
+ 
