@@ -54,13 +54,11 @@ class ChatController {
 
 class ChatModule extends Module {
   ChatModule() {
-    type(ChatController);
+    bind(ChatController);
   }
 }
 
 void main() {
-  applicationFactory()
-    .addModule(new ChatModule())
-    .run();
+  applicationFactory().addModule(new ChatModule()).run();
 }
 

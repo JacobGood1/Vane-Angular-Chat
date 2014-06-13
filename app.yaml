@@ -1,8 +1,5 @@
-application: Vane Chat
-version: 1
-deploy: true
-pub: true
-dart2js: true 
+name: Vane-Angular-Chat
+framework: vane
 
 handlers:
 - url: /ws
