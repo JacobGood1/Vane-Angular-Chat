@@ -2,6 +2,7 @@ name: Vane-Angular-Chat
 
 server:
 - url: /ws
+  match: regex
 
 client:
 - url: /
