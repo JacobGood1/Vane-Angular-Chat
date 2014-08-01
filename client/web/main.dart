@@ -5,13 +5,13 @@ import 'package:angular/application_factory.dart';
 
 class Message {
   String user, message;
-  
+
   Message(this.user, this.message);
   Message.fromJson(Map data) {
     user    = data["user"];
     message = data["message"];
   }
-  
+
   Map toJson() => {"user": user, "message": message};
 }
 
@@ -24,10 +24,10 @@ class ChatController {
   String message = "";
   List<Message> messages = [];
   DivElement chatBox = querySelector("#chat-box");
-  
+
   ChatController() {
     // Initialize Websocket connection
-    ws = new WebSocket("ws://${window.location.hostname}/ws");
+    ws = new WebSocket("ws://${window.location.hostname}:${window.location.port}/ws");
 
     // Listen for Websocket events
     ws.onOpen.listen((e)    => print("Connected"));
@@ -35,19 +35,19 @@ class ChatController {
     ws.onError.listen((e)   => print("Error"));
 
     // Collect messages from the stream
-    ws.onMessage.listen((e) { 
+    ws.onMessage.listen((e) {
       messages.add(new Message.fromJson(JSON.decode(e.data)));
       chatBox.children.forEach((child) => chatBox.scrollByLines(chatBox.scrollHeight));
     });
   }
-  
+
   // Send message on the channel
   void send() {
     if(user != "" && message != "") {
       ws.send(JSON.encode(new Message(user, message)));
 
       // Clear message input
-      message = "";  
+      message = "";
     }
   }
 }
