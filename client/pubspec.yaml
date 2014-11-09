@@ -3,5 +3,5 @@ dependencies:
   angular: "1.0.0"
 
 transformers:
- - angular
-
+- angular:
+    dart_sdk: "/www/dart-sdk/latest"
