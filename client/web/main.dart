@@ -7,6 +7,7 @@ class Message {
   String user, message;
 
   Message(this.user, this.message);
+
   Message.fromJson(Map data) {
     user    = data["user"];
     message = data["message"];
@@ -15,9 +16,7 @@ class Message {
   Map toJson() => {"user": user, "message": message};
 }
 
-@Controller(
-  selector: '[chat-app]',
-  publishAs: 'chat')
+@Injectable()
 class ChatController {
   WebSocket ws;
   String user = "";
@@ -26,8 +25,11 @@ class ChatController {
   DivElement chatBox = querySelector("#chat-box");
 
   ChatController() {
-    // Initialize Websocket connection
-    ws = new WebSocket("ws://${window.location.hostname}:${window.location.port}/ws");
+    // Initialize Websocket connection (9090 for during development locally,
+    // otherwise use standard port 80 for production)
+    Uri uri = Uri.parse(window.location.href);
+    var port = uri.port != 8080 ? 80 : 9090;
+    ws = new WebSocket("ws://${uri.host}:${port}/ws");
 
     // Listen for Websocket events
     ws.onOpen.listen((e)    => print("Connected"));
@@ -52,13 +54,9 @@ class ChatController {
   }
 }
 
-class ChatModule extends Module {
-  ChatModule() {
-    bind(ChatController);
-  }
-}
-
 void main() {
-  applicationFactory().addModule(new ChatModule()).run();
+  applicationFactory()
+      .rootContextType(ChatController)
+      .run();
 }
 
