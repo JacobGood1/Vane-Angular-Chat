@@ -2,6 +2,6 @@ name: client
 dependencies:
   angular: "1.0.0"
 
-transformers:
-- angular:
-    dart_sdk: "/www/dart-sdk/latest"
+#transformers:
+#- angular:
+#    dart_sdk: "/www/dart-sdk/latest"

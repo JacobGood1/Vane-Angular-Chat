@@ -14,6 +14,7 @@ class Chat extends Vane {
 
     // Add all incomming message to the chatStream
     conn.onData((msg) {
+      print("dat");
       log.info(msg);
       channel.sink.add(msg);
     });
@@ -26,9 +27,11 @@ class Chat extends Vane {
 
     // Add message to chat stream
     channel.stream.listen((msg) {
+      print("stream activated");
       log.info(msg);
       ws.add(msg);
     });
+
 
     return end;
   }
